@@ -5,269 +5,98 @@
 #include <dt-bindings/zmk/pointing.h>
 
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 100
-#define DFb 0
-#define JIS 1
-#define BT 4
-#define MOUSE 6
-#define JP_DQUOTE       AT                // "
-#define JP_AMPERSAND    CARET             // &
-#define JP_QUOTE        AMPERSAND         // '
-#define JP_EQUAL        UNDER             // =
-#define JP_CARET        EQUAL             // ^
-#define JP_YEN          0x89              // ¥
-#define JP_PLUS         COLON             // +
-#define JP_TILDE        PLUS              // ~
-#define JP_PIPE         LS(0x89)          // |
-#define JP_AT           LEFT_BRACKET      // @
-#define JP_COLON        SINGLE_QUOTE      // :
-#define JP_ASTERISK     DOUBLE_QUOTES     // *
-#define JP_BACKQUOTE    LEFT_BRACE        // `
-#define JP_UNDERSCORE   LS(0x87)          // _
-#define JP_LBRACKET     RIGHT_BRACKET     // [
-#define JP_RBRACKET     BACKSLASH         // ]
-#define JP_LPAREN       ASTERISK          // (
-#define JP_RPAREN       LEFT_PARENTHESIS  // )
-#define JP_LBRACE       RIGHT_BRACE       // {
-#define JP_RBRACE       PIPE              // }
-#define JP_KANA         LANGUAGE_1        // かな
-#define JP_EISU         LANGUAGE_2        // 英数
-#define JP_HANZEN       GRAVE             // 半角/全角
-#define JP_BSLH  INT1         // (backslash)
+
+// Layer Definitions
+#define L_BASE 0
+#define L_LOWER 1
+#define L_RAISE 2
+#define L_MS_NAV 3
+#define L_SYSTEM 4
+
+// Japanese Key Aliases (for US/Standard firmware on Mac)
+#define JP_KANA LANGUAGE_1
+#define JP_EISU LANGUAGE_2
 
 &mt {
     flavor = "balanced";
-    quick-tap-ms = <0>;
+    tapping-term-ms = <200>;
+    quick-tap-ms = <175>;
+};
+
+&lt {
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <175>;
 };
 
 / {
-    combos { compatible = "zmk,combos"; };
-
-    macros {
-        to_layer_0: to_layer_0 {
-            compatible = "zmk,behavior-macro-one-param";
-            #binding-cells = <1>;
-            bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
-            label = "TO_LAYER_0";
+    combos {
+        compatible = "zmk,combos";
+        // J+K = ESC
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <8 9>;
+            bindings = <&kp ESC>;
         };
     };
 
     behaviors {
-        lt_to_layer_0: lt_to_layer_0 {
-            compatible = "zmk,behavior-hold-tap";
-            label = "LAYER_TAP_TO_0";
-            bindings = <&mo>, <&to_layer_0>;
-
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-        };
-
-        mo2: mo2 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N2>, <&kp AT>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        mo6: mo6 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N6>, <&kp CARET>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        mo7: mo7 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N7>, <&kp AMPS>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        mo8: mo8 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N8>, <&kp ASTRK>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        mo9: mo9 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N9>, <&kp LPAR>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        mo0: mo0 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N0>, <&kp LS(N9)>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moA: moA {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp MINUS>, <&kp UNDERSCORE>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moB: moB {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp EQUAL>, <&kp PLUS>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moC: moC {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp INT3>, <&kp JP_PIPE>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moD: moD {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LBKT>, <&kp LBRC>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moE: moE {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp RBKT>, <&kp RBRC>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moF: moF {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp SEMI>, <&kp KP_PLUS>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moG: moG {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp APOSTROPHE>, <&kp DQT>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moH: moH {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp BACKSLASH>, <&kp TILDE2>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        moI: moI {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp JP_BSLH>, <&kp JP_UNDERSCORE>;
-
-            mods = <(MOD_LSFT|MOD_RSFT)>;
-        };
-
-        scroll_up_down: behavior_sensor_rotate_mouse_wheel_up_down {
-            compatible = "zmk,behavior-sensor-rotate";
-            #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
-
-            tap-ms = <20>;
-        };
+        // Simple and responsive tap-hold
     };
 
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
+            label = "BASE";
             bindings = <
-&kp Q           &kp W         &kp E         &kp R             &kp T                                         &kp Y             &kp U           &kp I      &kp O    &kp P
-&kp A           &kp S         &kp D         &kp F             &kp G        &kp LS(LG(S))         &kp MINUS  &kp H             &kp J           &kp K      &kp L    &kp SQT
-&kp LEFT_SHIFT  &kp Z         &kp X         &kp C             &kp V        &kp B                 &mkp MB1   &kp N             &kp M           &kp COMMA  &kp DOT  &kp SLASH
-&kp LCTRL       &kp LEFT_WIN  &kp LEFT_ALT  &lt 3 INT_HENKAN  &lt 2 SPACE  &lt 1 INT_MUHENKAN               &kp INT_MUHENKAN  &kp INT_HENKAN                                 &kp ENTER
+&kp Q      &kp W      &kp E      &kp R      &kp T                         &kp Y      &kp U      &kp I      &kp O      &kp P
+&kp A      &kp S      &kp D      &kp F      &kp G      &kp MINUS &kp EQUAL &kp H      &kp J      &kp K      &kp L      &kp SQT
+&kp LSHIFT &kp Z      &kp X      &kp C      &kp V      &kp B     &kp LBKT  &kp N      &kp M      &kp COMMA  &kp DOT    &kp SLASH
+&kp LCTRL  &kp LGUI   &kp LALT   &kp JP_EISU &lt L_LOWER SPACE &trans     &lt L_RAISE JP_KANA &lt L_MS_NAV ENTER           &kp BSPC
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
-        layer_1 {
+        lower_layer {
+            label = "LOWER";
             bindings = <
-&kp JP_HANZEN  &trans  &trans  &trans            &trans                                          &trans       &trans  &moA    &moB  &moC
-&kp TAB        &trans  &trans  &trans            &trans       &trans                &trans       &trans       &trans  &trans  &moD  &moE
-&trans         &trans  &trans  &trans            &trans       &trans                &kp JP_EISU  &kp JP_KANA  &trans  &moF    &moG  &moH
-&mt LCTL ESC   &trans  &trans  &lt 5 INT_HENKAN  &lt 4 SPACE  &lt 1 INT_MUHENKAN                 &trans       &trans                      &moI
+&kp N1     &kp N2     &kp N3     &kp N4     &kp N5                        &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
+&kp TAB    &trans     &trans     &trans     &trans     &trans    &trans   &kp MINUS  &kp KP_N4  &kp KP_N5  &kp KP_N6  &kp BSLH
+&trans     &trans     &trans     &trans     &trans     &trans    &trans   &kp PLUS   &kp KP_N1  &kp KP_N2  &kp KP_N3  &kp EQUAL
+&trans     &trans     &trans     &trans     &trans     &trans             &kp KP_N0  &trans                           &kp DEL
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
-        layer_2 {
+        raise_layer {
+            label = "RAISE";
             bindings = <
-&kp N1  &mo2    &kp N3  &kp N4            &kp N5                                     &mo6    &mo7    &mo8             &mo9             &mo0
-&trans  &trans  &trans  &trans            &trans       &trans                &trans  &trans  &trans  &trans           &kp C_MENU_UP    &trans
-&trans  &trans  &trans  &trans            &trans       &trans                &trans  &trans  &trans  &kp C_MENU_LEFT  &kp C_MENU_DOWN  &kp C_MENU_RIGHT
-&trans  &trans  &trans  &lt 0 INT_HENKAN  &lt 2 SPACE  &lt 4 INT_MUHENKAN            &trans  &trans                                                      &trans
+&kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT                     &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR   &kp RPAR
+&kp GRAVE  &trans     &trans     &trans     &trans     &trans    &trans   &kp TILDE  &kp LBRC   &kp RBRC   &kp PIPE   &kp COLON
+&trans     &trans     &trans     &trans     &trans     &trans    &trans   &kp UNDER  &kp LBKT   &kp RBKT   &kp PLUS   &kp LEFT_BRACE
+&trans     &trans     &trans     &trans     &trans     &trans             &trans     &mo L_SYSTEM                      &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
-        layer_3 {
+        ms_nav_layer {
+            label = "MS_NAV";
             bindings = <
-&kp F1   &kp F2                  &kp F3          &kp F4                   &kp F5                                     &kp F6  &kp F7  &kp F8  &kp F9  &kp F10
-&kp F11  &kp F12                 &kp DOWN_ARROW  &kp RIGHT_ARROW          &kp END      &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans   &kp LG(LS(LEFT_ARROW))  &trans          &kp LG(LS(RIGHT_ARROW))  &trans       &trans                &trans  &trans  &trans  &trans  &trans  &trans
-&trans   &trans                  &trans          &lt 3 INT_HENKAN         &lt 0 SPACE  &lt 5 INT_MUHENKAN            &trans  &trans                           &trans
+&kp F1     &kp F2     &kp F3     &kp F4     &kp F5                        &kp F6     &kp F7     &kp F8     &kp F9     &kp F10
+&trans     &trans     &trans     &trans     &trans     &trans    &trans   &kp LEFT   &kp DOWN   &kp UP     &kp RIGHT  &kp F11
+&trans     &trans     &trans     &trans     &trans     &trans    &trans   &mkp MB1   &mkp MB3   &mkp MB2   &trans     &kp F12
+&trans     &trans     &trans     &trans     &trans     &trans             &trans     &trans                          &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
-        layer_4 {
+        system_layer {
+            label = "SYSTEM";
             bindings = <
-&bt BT_SEL 0    &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4                          &trans  &trans  &trans  &trans  &trans
-&bt BT_DISC 0   &bt BT_DISC 1  &bt BT_DISC 2  &bt BT_DISC 3  &bt BT_DISC 4  &trans    &trans       &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR      &trans         &trans         &trans         &trans         &trans    &bootloader  &trans  &trans  &trans  &trans  &trans
-&bt BT_CLR_ALL  &trans         &trans         &trans         &trans         &trans                 &trans  &trans                          &trans
+&bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4             &trans     &trans     &trans     &trans     &trans
+&bt BT_CLR   &trans       &trans       &trans       &trans     &trans &trans &trans     &trans     &trans     &trans     &trans
+&bt BT_CLR_ALL &trans     &trans       &trans       &trans     &bootloader &trans &trans     &trans     &trans     &trans     &trans
+&trans       &trans       &trans       &trans       &trans     &trans            &trans     &trans                          &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
-        };
-
-        layer_5 {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                                        &kp MINUS        &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp PLUS
-&trans  &trans  &trans  &trans  &trans  &trans    &trans                      &kp SLASH        &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp ASTERISK
-&trans  &trans  &trans  &trans  &trans  &trans    &mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp PERIOD       &kp EQUAL
-&trans  &trans  &trans  &trans  &trans  &trans                                &trans           &trans                                                           &trans
-            >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
-        };
-
-        MOUSE {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans            &trans  &trans                                &trans
-            >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
     };
 };
+
