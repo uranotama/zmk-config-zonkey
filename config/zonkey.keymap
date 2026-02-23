@@ -4,9 +4,14 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
+/ {
+    aliases {
+        led-red = &status_led_red;
+        led-green = &status_led_green;
+        led-blue = &status_led_blue;
+    };
+};
 
-// Layer Definitions
 #define L_BASE 0
 #define L_LOWER 1
 #define L_RAISE 2
