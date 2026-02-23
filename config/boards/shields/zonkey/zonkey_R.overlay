@@ -1,4 +1,4 @@
-#include <dt-bindings/zmk/input_events.h>
+#include <dt-bindings/input/input-event-codes.h>
 #include "zonkey.dtsi"
 
 &default_transform {
